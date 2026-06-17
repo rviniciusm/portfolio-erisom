@@ -145,7 +145,8 @@
         }
 
         /* --- VERSÃO MOBILE (CELULAR) --- */
-        .horizontal-container {
+        /* Todos os grids (inclusive os que eram 1x2) viram uma coluna 1x1 no celular */
+        .horizontal-container, .grid-1x2 {
             display: flex;
             flex-direction: column; 
             gap: var(--grid-gap);
@@ -153,17 +154,7 @@
             overflow-x: hidden; 
         }
 
-        .grid-1x2 {
-            display: flex;
-            flex-direction: row;
-            gap: var(--grid-gap);
-            padding: 0 var(--grid-gap);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; 
-        }
-
         .campaign-card {
-            height: calc(100vh - 40px); 
             position: relative;
             cursor: pointer;
             background-size: cover;
@@ -174,17 +165,11 @@
             transition: transform 0.4s ease, filter 0.4s ease;
         }
 
-        .grid-1x2 .campaign-card {
-            height: 120vh; 
-        }
-
-        .horizontal-container .campaign-card {
+        /* No celular, TODOS os cards ficam com 100% de largura e altura de tela cheia */
+        .horizontal-container .campaign-card, .grid-1x2 .campaign-card {
             flex: none;
             width: 100%; 
-        }
-
-        .grid-1x2 .campaign-card {
-            flex: 0 0 calc((100vw - 60px) / 2); 
+            height: calc(100vh - 40px); 
         }
 
         /* --- VERSÃO DESKTOP (PC) --- */
@@ -202,7 +187,8 @@
                 font-size: 1.1rem;
             }
 
-            .horizontal-container {
+            /* No PC, devolvemos a rolagem horizontal lado a lado para TODOS os grids */
+            .horizontal-container, .grid-1x2 {
                 flex-direction: row; 
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch; 
@@ -211,10 +197,12 @@
             .horizontal-container .campaign-card {
                 width: auto;
                 flex: 0 0 40vw; 
+                height: calc(100vh - 40px); 
             }
 
             .grid-1x2 .campaign-card {
-                flex: 0 0 calc((100vw - 60px) / 2); 
+                flex: 0 0 calc((100vw - 60px) / 2); /* Volta a ser 2 por tela no PC */
+                height: 120vh; /* Continua bem comprido no PC */
             }
             
             /* Restaura os contatos lado a lado no PC */
@@ -543,7 +531,7 @@
             }, 500);
         });
 
-        // Configuração original do usuário preservada
+        // Configuração das Imagens
         const horizontalCampaigns = [
             {
                 id: 'vigilancia', title: 'Vigilância',
