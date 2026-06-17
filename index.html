@@ -61,21 +61,19 @@
             scrollbar-width: thin;
             scrollbar-color: #2a2a2a var(--bg-color);
         }
-        /* ------------------------------------------------- */
-
-        /* --- MENU COM ANIMAÇÃO ELEGANTE --- */
+        
         .top-nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 30px 20px; 
+            padding: 40px 50px; 
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             z-index: 50;
             pointer-events: none; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 100%);
         }
 
         .top-nav > * {
@@ -83,19 +81,20 @@
         }
 
         .brand-logo {
-            font-size: 1.8rem;
-            letter-spacing: 0.3rem;
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            top: 25px;
+            top: 30px;
             text-shadow: 0 2px 15px rgba(0,0,0,0.5);
             pointer-events: none;
             z-index: 50;
         }
 
+        /* --- MENU COM ANIMAÇÃO ELEGANTE --- */
         .nav-link {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             text-decoration: none;
             color: #ffffff; 
             font-weight: 400;
@@ -125,8 +124,7 @@
             transform: scaleX(1);
             transform-origin: left;
         }
-        /* ---------------------------------- */
-
+        
         .main-content {
             padding-top: var(--grid-gap); 
             padding-bottom: 40px;
@@ -145,7 +143,7 @@
         }
 
         /* --- VERSÃO MOBILE (CELULAR) --- */
-        .horizontal-container, .grid-1x2 {
+        .horizontal-container {
             display: flex;
             flex-direction: column; 
             gap: var(--grid-gap);
@@ -153,7 +151,17 @@
             overflow-x: hidden; 
         }
 
+        .grid-1x2 {
+            display: flex;
+            flex-direction: row;
+            gap: var(--grid-gap);
+            padding: 0 var(--grid-gap);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; 
+        }
+
         .campaign-card {
+            height: calc(100vh - 40px); 
             position: relative;
             cursor: pointer;
             background-size: cover;
@@ -164,27 +172,22 @@
             transition: transform 0.4s ease, filter 0.4s ease;
         }
 
-        .horizontal-container .campaign-card, .grid-1x2 .campaign-card {
+        .grid-1x2 .campaign-card {
+            height: 120vh; 
+        }
+
+        .horizontal-container .campaign-card {
             flex: none;
             width: 100%; 
-            height: calc(100vh - 40px); 
+        }
+
+        .grid-1x2 .campaign-card {
+            flex: 0 0 calc((100vw - 60px) / 2); 
         }
 
         /* --- VERSÃO DESKTOP (PC) --- */
         @media (min-width: 768px) {
-            .top-nav {
-                padding: 40px 50px; 
-            }
-            .brand-logo {
-                font-size: 2.5rem;
-                letter-spacing: 0.5rem;
-                top: 30px;
-            }
-            .nav-link {
-                font-size: 1.1rem;
-            }
-
-            .horizontal-container, .grid-1x2 {
+            .horizontal-container {
                 flex-direction: row; 
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch; 
@@ -193,19 +196,10 @@
             .horizontal-container .campaign-card {
                 width: auto;
                 flex: 0 0 40vw; 
-                height: calc(100vh - 40px); 
             }
 
             .grid-1x2 .campaign-card {
                 flex: 0 0 calc((100vw - 60px) / 2); 
-                height: 120vh; 
-            }
-
-            /* Restaura os contatos lado a lado no PC */
-            .contact-links {
-                flex-direction: row !important;
-                gap: 60px !important;
-                margin-top: 60px !important;
             }
         }
 
@@ -327,8 +321,7 @@
                 transform: translateY(0) scale(1);
             }
         }
-        /* ------------------------------------------- */
-
+        
         /* --- SESSÃO SOBRE (ATUALIZADA) --- */
         .about-section {
             height: 100vh; 
@@ -368,12 +361,10 @@
 
         .contact-links {
             display: flex;
-            /* Empilhados no celular por padrão */
-            flex-direction: column; 
             justify-content: center;
             align-items: center;
-            gap: 25px; /* Distância menor no celular */
-            margin-top: 40px;
+            gap: 60px; 
+            margin-top: 60px;
             font-family: 'Montserrat', sans-serif; 
         }
 
@@ -396,8 +387,6 @@
             transform: translateY(-2px);
         }
 
-        /* ------------------------------------------- */
-
         .footer-copy {
             position: absolute;
             bottom: 40px;
@@ -406,9 +395,76 @@
             letter-spacing: 0.1em;
             opacity: 0.8;
         }
+
+        /* --- TELA DE CARREGAMENTO (PRELOADER) --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-color);
+            z-index: 9999; /* Fica por cima de absolutamente tudo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s cubic-bezier(0.8, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+            animation: pulseOpacity 1.5s infinite alternate ease-in-out;
+        }
+
+        .loader-line-container {
+            width: 120px;
+            height: 1px;
+            background-color: #222;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loader-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            transform: translateX(-100%);
+            animation: slideLine 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes pulseOpacity {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="brand-font loader-logo">Erisom</div>
+        <div class="loader-line-container">
+            <div class="loader-line"></div>
+        </div>
+    </div>
 
     <header class="top-nav">
         <a href="#sobre" class="nav-link">Sobre</a>
@@ -450,6 +506,20 @@
     </section>
 
     <script>
+        // --- LÓGICA DA TELA DE CARREGAMENTO ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                
+                setTimeout(() => {
+                    preloader.remove();
+                }, 800);
+            }, 500);
+        });
+
+        // Configuração original do usuário preservada
         const horizontalCampaigns = [
             {
                 id: 'vigilancia', title: 'Vigilância',
